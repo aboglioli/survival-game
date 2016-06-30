@@ -1,27 +1,31 @@
-import Phaser from 'phaser'
+import Phaser from 'phaser';
 import {
-    centerGameObjects
-} from '../utils'
+  centerGameObjects
+} from '../utils';
+
+import loadSprites from '../SpriteLoader';
 
 export default class extends Phaser.State {
-    init() {}
+  init() {}
 
-    preload() {
-        // loader bar
-        this.loaderBg = this.add.sprite(this.game.world.centerX, this.game
-            .world.centerY, 'loaderBg');
-        this.loaderBar = this.add.sprite(this.game.world.centerX, this.game
-            .world.centerY, 'loaderBar');
-        centerGameObjects([this.loaderBg, this.loaderBar]);
+  preload() {
+    // loader bar
+    this.loaderBg = this.add.sprite(this.game.world.centerX, this.game
+      .world.centerY, 'loaderBg');
+    this.loaderBar = this.add.sprite(this.game.world.centerX, this.game
+      .world.centerY, 'loaderBar');
+    centerGameObjects([this.loaderBg, this.loaderBar]);
 
-        this.load.setPreloadSprite(this.loaderBar);
+    this.load.setPreloadSprite(this.loaderBar);
 
-        // load assets
-        this.load.image('mushroom', './assets/sprites/civilian_walk.png');
-    }
+    // load assets
+    loadSprites((name, file) => {
+      this.load.spritesheet(name, file);
+    });
+  }
 
-    create() {
-        this.state.start('Game');
-    }
+  create() {
+    this.state.start('Game');
+  }
 
 }
